@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">
+
+	<select id="getUserByRealPass" parameterType="pd" resultType="pd">
+		SELECT
+			s.USER_ID USER_ID,
+			s.USERNAME USERNAME,
+			s.PASSWORD PASSWORD,
+			s.ROLE_ID ROLE_ID,
+			s.EMAIL EMAIL,
+			s.ISLOCKED ISLOCKED,
+			s.REMARK REMARK
+		FROM
+			sys_user s
+		where s.PASSWORD = #{realpass}
+	</select>
+
+	<select id="getUser" parameterType="pd" resultType="pd">
+		SELECT
+			s.USER_ID USER_ID,
+			s.USERNAME USERNAME,
+			s.PASSWORD PASSWORD,
+			s.NAME NAME,
+			s.ROLE_ID ROLE_ID,
+			s.EMAIL EMAIL,
+			s.NUMBER NUMBER,
+			s.ISLOCKED ISLOCKED,
+			s.REMARK REMARK
+		FROM
+			sys_user s
+	</select>
+
+	<select id="getUserAndRoleInfo" parameterType="pd" resultType="pd">
+		SELECT
+			u.USER_ID USER_ID,
+			u.USERNAME USERNAME,
+			u.EMAIL EMAIL,
+			u.ISLOCKED ISLOCKED,
+			u.REMARK REMARK,
+			u.CREATERIGHT CREATERIGHT,
+			u.UPDATERIGHT UPDATERIGHT,
+			u.DELETERIGHT DELETERIGHT,
+			r.ROLE_ID ROLE_ID,
+			r.ROLE_NAME ROLE_NAME
+		FROM
+			sys_user u,
+			sys_role r
+		WHERE
+			TRUE
+		AND u.role_id = r.role_id
+		order by u.USER_ID desc
+	</select>
+
+	<insert id="insertUser" parameterType="pd">
+		INSERT INTO sys_user (
+			USERNAME,
+			NAME,
+			EMAIL,
+			ROLE_ID
+		)
+		VALUES(
+			#{loginname},
+			#{inputname},
+			#{email},
+			#{rolename}
+		)
+	</insert>
+
+	<delete id="deleteUser" parameterType="pd">
+		DELETE
+		FROM
+			sys_user
+		WHERE
+			USER_ID = #{id}
+	</delete>
+
+	<update id="updateBtnRight" parameterType="pd">
+		UPDATE sys_user
+		<if test="whereConditon=='CREATERIGHT'">
+			SET createright = #{rightCode}
+		</if>
+		<if test="whereConditon=='UPDATERIGHT'">
+			SET updateright = #{rightCode}
+		</if>
+		<if test="whereConditon=='DELETERIGHT'">
+			SET deleteright = #{rightCode}
+		</if>
+		where USER_ID = #{userID}
+	</update>
+</mapper>

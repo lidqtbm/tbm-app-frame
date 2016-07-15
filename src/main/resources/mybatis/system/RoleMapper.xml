@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RoleMapper">
+
+	<select id="getRoleByRoleID" parameterType="pd" resultType="pd">
+		SELECT
+			s.ROLE_ID ROLE_ID ,
+			s.ROLE_NAME ROLE_NAME,
+			s.RIGHTS RIGHTS
+		FROM
+			sys_role s
+		where true
+			and s.ROLE_ID = #{ROLE_ID}
+	</select>
+
+	<select id="getRightsByRoleID" parameterType="pd" resultType="pd">
+		SELECT
+			s.ROLE_ID ROLE_ID,
+			s.ROLE_NAME ROLE_NAME,
+			s.RIGHTS RIGHTS
+		FROM
+			sys_role s
+		where s.ROLE_ID = #{ROLE_ID}
+	</select>
+
+	<select id="getRoles" resultType="pd">
+		SELECT
+			s.ROLE_ID ROLE_ID,
+			s.ROLE_NAME ROLE_NAME,
+			s.RIGHTS
+		FROM
+			sys_role s
+		order by s.ROLE_ID desc
+	</select>
+
+	<select id="checkRoleName" parameterType="pd" resultType="pd">
+		SELECT
+			COUNT(*) RESULT
+		FROM
+			sys_role
+		where ROLE_NAME = #{addRoleName}
+	</select>
+
+	<select id="addRoleName" parameterType="pd" resultType="pd">
+		INSERT INTO sys_role (
+			ROLE_NAME,
+			RIGHTS
+
+		)values (
+			#{ROLE_NAME},
+			#{RIGHTS}
+
+		)
+	</select>
+
+	<delete id="deleteRoles" parameterType="pd">
+		DELETE
+		FROM
+			sys_role
+		WHERE
+			role_name = #{roleName}
+	</delete>
+
+	<update id="updateRoles" parameterType="pd">
+		UPDATE sys_role
+		SET RIGHTS = #{rights}
+		where ROLE_ID = #{rightRole}
+	</update>
+</mapper>

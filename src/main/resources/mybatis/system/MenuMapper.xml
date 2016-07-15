@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+
+	<select id="getUserMenu" parameterType="pd" resultType="pd">
+		SELECT
+			s.MENU_ID MENU_ID,
+			s.MENU_NAME MENU_NAME,
+			s.MENU_URL MENU_URL,
+			s.PARENT_ID PARENT_ID,
+			s.MENU_ORDER MENU_ORDER,
+			s.MENU_ICON MENU_ICON
+		FROM
+			sys_menu s
+		where true
+	</select>
+
+
+	<select id="getMenuIDByParentID" parameterType="pd" resultType="pd">
+		  SELECT
+			s.MENU_ID MENU_ID,
+			s.MENU_NAME MENU_NAME,
+			s.MENU_URL MENU_URL,
+			s.PARENT_ID PARENT_ID,
+			s.MENU_ORDER MENU_ORDER,
+			s.MENU_ICON MENU_ICON,
+			s.MENU_TYPE MENU_TYPE
+		FROM
+			sys_menu s
+		where 	TRUE
+				and s.PARENT_ID = #{MENU_ID}
+		order by s.MENU_ORDER
+	</select>
+
+</mapper>

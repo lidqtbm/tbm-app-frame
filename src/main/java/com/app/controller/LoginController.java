@@ -108,7 +108,6 @@ public class LoginController extends BaseController {
         //通过根目录，获取菜单树形图
         List<PageData> menuResult = new ArrayList<PageData>();
         menuResult = new MenuUtil().getTreeMenu(ownerRole,parentID_0,menuManager);
-
         PageData infoPageData = ConstantUtil.getInfomationPageData();
         //通过session，保存menu信息
         //start init

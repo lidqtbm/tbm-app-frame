@@ -176,20 +176,6 @@ public class GeneratorJson  extends BaseController{
         return mv;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/btnSaveRights" , produces = "application/json;charset=UTF-8")
-    public ModelAndView saveBtnRights(){
-        ModelAndView mv = this.getModelAndView();
-        PageData pd = this.getPageData();
-        String righsArray [] = pd.getString("right").split("@");
-        String rightCode = RightsHelper.sumRights(righsArray).toString();
-        pd.put("rightCode",rightCode);
-        userManager.updateBtnRight(pd);
-        mv.addObject("pd", ConstantUtil.getInfomationPageData());
-        mv.addObject("userlist",userManager.getUserAndRoleInfo());
-        mv.setViewName("ajax/user_table");
-        return mv;
-    }
 
     @ResponseBody
     @RequestMapping(value = "/checkRoleName" , produces = "application/json;charset=UTF-8")

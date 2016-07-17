@@ -11,7 +11,10 @@
 			s.ROLE_ID ROLE_ID,
 			s.EMAIL EMAIL,
 			s.ISLOCKED ISLOCKED,
-			s.REMARK REMARK
+			s.REMARK REMARK,
+			s.CREATERIGHT CREATERIGHT,
+			s.UPDATERIGHT UPDATERIGHT,
+			s.DELETERIGHT DELETERIGHT
 		FROM
 			sys_user s
 		where s.PASSWORD = #{realpass}
@@ -89,4 +92,15 @@
 		</if>
 		where USER_ID = #{userID}
 	</update>
+
+	<select id="getUserCUDByID" parameterType="pd" resultType="pd">
+		SELECT
+			s.CREATERIGHT CREATERIGHT,
+			s.UPDATERIGHT UPDATERIGHT,
+			s.DELETERIGHT DELETERIGHT
+		FROM
+			sys_user s
+		where s.USER_ID = #{USER_ID}
+	</select>
+
 </mapper>

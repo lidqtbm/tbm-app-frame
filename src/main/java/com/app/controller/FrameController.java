@@ -1,22 +1,25 @@
 package com.app.controller;
 
 import com.app.controller.base.BaseController;
+import com.app.entity.UserEntity;
 import com.app.service.manager.RoleManager;
 import com.app.service.manager.UserManager;
 import com.app.util.ConstantUtil;
 import com.app.util.PageData;
-import org.omg.CORBA.Object;
+
+import com.app.util.RightsHelper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
+
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * 系统管理 控制器
@@ -55,6 +58,25 @@ public class FrameController extends BaseController {
     public ModelAndView frameRole(){
         ModelAndView mv = this.getModelAndView();
         List<PageData> rolesList = roleManager.getRoles();
+        HttpSession session = this.getRequest().getSession();
+        PageData user = (PageData) session.getAttribute("USER");
+        PageData userPageData = userManager.getUserCUDByID(user);
+
+        String createRights = userPageData.getString("CREATERIGHT");
+        String updateRights = userPageData.getString("UPDATERIGHT");
+        String deleteRights = userPageData.getString("DELETERIGHT");
+
+        String createFlag = RightsHelper.testRights(createRights,2)?"1":"0";
+        String updateFlag = RightsHelper.testRights(updateRights,2)?"1":"0";
+        String deleteFlag = RightsHelper.testRights(deleteRights,2)?"1":"0";
+
+        PageData button = this.getPageData();
+        String menuUrl = button.getString("MENU_URL");
+        button.put("CREATERIGHT",createRights);
+        button.put("UPDATERIGHT",updateRights);
+        button.put("DELETERIGHT",deleteRights);
+
+        mv.addObject("button",button);
         mv.addObject("rolesList",rolesList);
         mv.addObject("pd", ConstantUtil.getInfomationPageData());
         mv.setViewName("frame_role");

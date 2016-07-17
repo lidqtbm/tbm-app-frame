@@ -61,4 +61,14 @@ public class UserServiceImpl implements UserManager {
             e.printStackTrace();
         }
     }
+
+    public PageData getUserCUDByID(PageData pd) {
+        PageData pageData = new PageData();
+        try {
+            pageData = (PageData) daoSupport.findForObject("UserMapper.getUserCUDByID",pd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageData;
+    }
 }

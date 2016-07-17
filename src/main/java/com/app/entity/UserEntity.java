@@ -15,6 +15,11 @@ public class UserEntity {
     private String IP;			//用户登录ip地址
     private String STATUS;		//状态
 
+    private String CREATERIGHT;
+    private String UPDATERIGHT;
+    private String DELETERIGHT;
+
+
     public String getUSER_ID() {
         return USER_ID;
     }
@@ -85,5 +90,29 @@ public class UserEntity {
 
     public void setSTATUS(String STATUS) {
         this.STATUS = STATUS;
+    }
+
+    public String getCREATERIGHT() {
+        return CREATERIGHT;
+    }
+
+    public void setCREATERIGHT(String CREATERIGHT) {
+        this.CREATERIGHT = CREATERIGHT;
+    }
+
+    public String getUPDATERIGHT() {
+        return UPDATERIGHT;
+    }
+
+    public void setUPDATERIGHT(String UPDATERIGHT) {
+        this.UPDATERIGHT = UPDATERIGHT;
+    }
+
+    public String getDELETERIGHT() {
+        return DELETERIGHT;
+    }
+
+    public void setDELETERIGHT(String DELETERIGHT) {
+        this.DELETERIGHT = DELETERIGHT;
     }
 }

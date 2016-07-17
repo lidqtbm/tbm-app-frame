@@ -18,4 +18,6 @@ public interface UserManager {
     public void deleteUser(PageData pd);
 
     public void updateBtnRight(PageData pd);
+
+    public PageData getUserCUDByID(PageData pd);
 }

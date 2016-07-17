@@ -524,6 +524,7 @@
             type : 'post',
             url : MENU_URL,
             async : false,
+            data : {'MENU_URL':MENU_URL},
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             success : function (data) {
                 $("#rightContent").html(data);

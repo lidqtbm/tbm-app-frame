@@ -4,6 +4,7 @@ import com.app.controller.base.BaseController;
 import com.app.service.manager.UserManager;
 import com.app.util.ConstantUtil;
 import com.app.util.PageData;
+import com.app.util.RightsHelper;
 import org.omg.CORBA.Object;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +62,21 @@ public class UserController extends BaseController {
         List<PageData> userListPageData = userManager.getUserAndRoleInfo();
         mv.addObject("pd", ConstantUtil.getInfomationPageData());
         mv.addObject("userlist",userListPageData);
+        mv.setViewName("ajax/user_table");
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/btnSaveRights" , produces = "application/json;charset=UTF-8")
+    public ModelAndView saveBtnRights(){
+        ModelAndView mv = this.getModelAndView();
+        PageData pd = this.getPageData();
+        String righsArray [] = pd.getString("right").split("@");
+        String rightCode = RightsHelper.sumRights(righsArray).toString();
+        pd.put("rightCode",rightCode);
+        userManager.updateBtnRight(pd);
+        mv.addObject("pd", ConstantUtil.getInfomationPageData());
+        mv.addObject("userlist",userManager.getUserAndRoleInfo());
         mv.setViewName("ajax/user_table");
         return mv;
     }

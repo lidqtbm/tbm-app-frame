@@ -46,7 +46,7 @@ public class GeneratorJson  extends BaseController{
         pd.put("MENU_ID","0");
         List<PageData> allMenu = menuManager.getMenuIDByParentID(pd);
         List<PageData> result = new ArrayList<PageData>();
-        result = new MenuUtil().getTreeMenu(allMenu,menuManager);
+        result = new MenuUtil().initMenu(allMenu,menuManager);
         List<PageData> nodes = new ArrayList<PageData>();
         for(PageData tPageData : result ){
             if(tPageData.getString("PARENT_ID").equals("0")){
@@ -101,7 +101,7 @@ public class GeneratorJson  extends BaseController{
         pd.put("MENU_ID","0");
         List<PageData> allMenu = menuManager.getMenuIDByParentID(pd);
         List<PageData> result = new ArrayList<PageData>();
-        result = new MenuUtil().getTreeMenu(allMenu,menuManager);
+        result = new MenuUtil().initMenu(allMenu,menuManager);
         String rights = pd.getString("rights");
         List<PageData> nodes = new ArrayList<PageData>();
         for(PageData tPageData : result ){
@@ -118,10 +118,8 @@ public class GeneratorJson  extends BaseController{
                     firstPD.put("id",(Integer)subPageData.get("MENU_ID"));
                     firstPD.put("pId",subPageData.getString("PARENT_ID"));
                     firstPD.put("name",subPageData.getString("MENU_NAME"));
-
                     List<PageData> secondSubMenu = (List<PageData>) subPageData.get("secondSubMenu");
                     boolean subflag = RightsHelper.testRights(rights,(Integer)subPageData.get("MENU_ID"));
-
                     if(0 == secondSubMenu.size()&&subflag){
                         firstPD.put("checked","true");
                     }
@@ -131,10 +129,8 @@ public class GeneratorJson  extends BaseController{
                         secondPD.put("id",(Integer)subSubPageData.get("MENU_ID"));
                         secondPD.put("pId",subSubPageData.getString("PARENT_ID"));
                         secondPD.put("name",subSubPageData.getString("MENU_NAME"));
-
                         List<PageData> thirdSubMenu = (List<PageData>) subSubPageData.get("thirdSubMenu");
                         boolean secsubflag = RightsHelper.testRights(rights,(Integer)subSubPageData.get("MENU_ID"));
-
                         if(0 == thirdSubMenu.size()&&secsubflag){
                             secondPD.put("checked","true");
                         }
@@ -157,7 +153,6 @@ public class GeneratorJson  extends BaseController{
         map.put("nodes",nodes);
         return map;
     }
-
     /**
      *
      * @param

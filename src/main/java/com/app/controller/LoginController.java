@@ -92,21 +92,22 @@ public class LoginController extends BaseController {
         //此用户所拥有的目录权限ownerRole包含了所有的此用户含有的权限
         List<PageData> ownerRole = new ArrayList<PageData>();
         //根目录
-//        List<PageData> parentID_0 = new ArrayList<PageData>();
+        List<PageData> parentID_0 = new ArrayList<PageData>();
         //通过rights权限码，确定此role包含的权限、并且确定此目录的所有根目录(parent_id==0),和非根目录(parent_id!=0)
         for(PageData local : menu){
             int mu = (Integer) local.get("MENU_ID");
             boolean flag = RightsHelper.testRights(rights,mu);
             if(flag){
-                ownerRole.add(local);
-//                if(local.getString("PARENT_ID").equals("0")){
-//                    parentID_0.add(local);
-//                }
+                if(local.getString("PARENT_ID").equals("0")){
+                    parentID_0.add(local);
+                }else{
+                    ownerRole.add(local);
+                }
             }
         }
         //通过根目录，获取菜单树形图
         List<PageData> menuResult = new ArrayList<PageData>();
-        menuResult = new MenuUtil().getTreeMenu(ownerRole,menuManager);
+        menuResult = new MenuUtil().getTreeMenu(ownerRole,parentID_0,menuManager);
 
         PageData infoPageData = ConstantUtil.getInfomationPageData();
         //通过session，保存menu信息

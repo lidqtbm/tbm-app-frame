@@ -47,7 +47,6 @@
                 <img src="media/image/menu-toggler.png" alt="" />
             </a>
             <!-- END RESPONSIVE MENU TOGGLER -->
-
             <!-- BEGIN TOP NAVIGATION MENU -->
             <ul class="nav pull-right">
                 <%--<!-- BEGIN NOTIFICATION DROPDOWN -->--%>
